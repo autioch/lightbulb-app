@@ -1,14 +1,14 @@
 import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
 import styles from './Color.module.scss';
 
-interface ColorProps {
+export interface ColorProps {
     index: number
     value: string
-    changeValue: (value: string) => any
-    removeValue: (index: number) => any
+    setColor: (index: number, value: string) => any
+    removeColor: (index: number) => any
 }
 
-export function Color({ index, value, changeValue, removeValue }: ColorProps) {
+export function Color({ index, value, setColor, removeColor }: ColorProps) {
   return (
     <div className={styles.Color}>
       <div className={styles.ColorIndex}>{index}</div>
@@ -17,9 +17,9 @@ export function Color({ index, value, changeValue, removeValue }: ColorProps) {
         type="color"
         key={value}
         value={value}
-        onChange={(ev) => changeValue(ev.target.value)}
+        onChange={(ev) => setColor(index, ev.target.value)}
       />
-      <div className={styles.ColorRemove} onClick={() => removeValue(index)}><CloseIcon/></div>
+      <div className={styles.ColorRemove} onClick={() => removeColor(index)}><CloseIcon/></div>
     </div>
   );
 }

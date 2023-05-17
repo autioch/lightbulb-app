@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 
 import { ConfigContext } from '../../context';
-import { Color } from './color/Color';
+import { type ColorProps, Color } from './color/Color';
 import styles from './Configuration.module.scss';
 
 export const configurationTitle = 'Configuration';
 
 export interface ConfigurationProps {
   setSpeed: (value: number) => any
-  setColor: (value: string) => any
-  removeColor: (index: number) => any,
+  setColor: ColorProps['setColor']
+  removeColor: ColorProps['removeColor'],
   addColor: () => void
 }
 
@@ -19,7 +19,6 @@ export function Configuration({ setSpeed, setColor, removeColor, addColor }: Con
 
   return (
     <div className={styles.Configuration}>
-
       <h4>Change speed</h4>
       <input
         id="speedInput"
@@ -36,8 +35,8 @@ export function Configuration({ setSpeed, setColor, removeColor, addColor }: Con
           key={index}
           index={index}
           value={color}
-          changeValue={setColor}
-          removeValue={removeColor}
+          setColor={setColor}
+          removeColor={removeColor}
         />)}
       </div>
       <div className={styles.ColorAdd} onClick={addColor}>+ Add Color</div>
