@@ -1,4 +1,4 @@
-import './toggle.scss';
+import styles from './toggle.module.scss';
 
 interface ToggleProps {
   onClick: () => void
@@ -7,6 +7,6 @@ interface ToggleProps {
 
 export function Toggle({ onClick, label }: ToggleProps) {
   return (
-    <div className="Toggle" onClick={onClick}>{label}</div>
+    <div className={styles.Toggle} onClick={onClick}>{label}</div>
   );
 }

@@ -1,12 +1,14 @@
-import './toolbar.scss';
+import { ReactElement } from 'react';
+
+import styles from './toolbar.module.scss';
 
 interface ToolbarProps {
-    children: any
+    children: ReactElement[]
 }
 
 export function Toolbar({ children }: ToolbarProps) {
   return (
-    <div className="Toolbar">
+    <div className={styles.Toolbar}>
       {children}
     </div>
   );

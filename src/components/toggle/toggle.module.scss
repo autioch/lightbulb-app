@@ -1,6 +1,6 @@
 .Toggle {
-    width: 2vw;
-    height: 2vw;
+    width: max(2rem, 2vw);
+    height: max(2rem, 2vw);
     cursor: pointer;
     display: flex;
     align-items: center;
