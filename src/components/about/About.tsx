@@ -1,4 +1,4 @@
-export const modalTitle = 'About';
+export const aboutTitle = 'About';
 
 export function About() {
   return (

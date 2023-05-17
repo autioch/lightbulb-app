@@ -1,0 +1,22 @@
+.Color {
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.ColorIndex {
+    width: 2rem;
+    text-align: right;
+}
+
+.ColorInput {
+    width: auto;
+    flex: 1 1 auto;
+    margin: 0 1rem;
+}
+
+.ColorRemove,
+.ColorRemove>svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}

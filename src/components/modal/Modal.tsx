@@ -1,6 +1,6 @@
 import { type JSX, SyntheticEvent, useEffect, useMemo, useRef } from 'react';
 
-import { ReactComponent as CloseIcon } from './close.svg';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import styles from './modal.module.scss';
 
 interface ModalProps {
@@ -46,9 +46,11 @@ export function Modal({ isOpen, children, title, closeFn }: ModalProps) {
       onClick={onClick}
       onAnimationEnd={onAnimationEnd}
     >
-      <header className={styles.ModalHeader}>{title}</header>
-      <div className={styles.ModalClose} onClick={closeFn}><CloseIcon/></div>
-      {children}
+      <div>
+        <header className={styles.ModalHeader}>{title}</header>
+        <div className={styles.ModalClose} onClick={closeFn}><CloseIcon/></div>
+        {children}
+      </div>
     </dialog>
   );
 }
