@@ -1,0 +1,15 @@
+.Toolbar {
+    position: absolute;
+    bottom: 0;
+    padding: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    box-sizing: border-box;
+
+    path {
+        fill: #000;
+        filter: contrast(0.1);
+    }
+}
