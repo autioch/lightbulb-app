@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.78294f54.css",
-    "main.js": "/static/js/main.b6a4752c.js",
-    "service-worker.js": "/service-worker.js",
-    "static/media/config.svg": "/static/media/config.0665251c528722349d970661c740ee08.svg",
-    "index.html": "/index.html",
-    "static/media/about.svg": "/static/media/about.c7b3592cf19a64b5cf542ec126137573.svg",
-    "static/media/close.svg": "/static/media/close.4076eeb30a38038696288534e7e741bb.svg",
-    "main.78294f54.css.map": "/static/css/main.78294f54.css.map",
-    "main.b6a4752c.js.map": "/static/js/main.b6a4752c.js.map"
+    "main.css": "/lightbulb-app/static/css/main.78294f54.css",
+    "main.js": "/lightbulb-app/static/js/main.bbe75568.js",
+    "service-worker.js": "/lightbulb-app/service-worker.js",
+    "static/media/config.svg": "/lightbulb-app/static/media/config.0665251c528722349d970661c740ee08.svg",
+    "index.html": "/lightbulb-app/index.html",
+    "static/media/about.svg": "/lightbulb-app/static/media/about.c7b3592cf19a64b5cf542ec126137573.svg",
+    "static/media/close.svg": "/lightbulb-app/static/media/close.4076eeb30a38038696288534e7e741bb.svg",
+    "main.78294f54.css.map": "/lightbulb-app/static/css/main.78294f54.css.map",
+    "main.bbe75568.js.map": "/lightbulb-app/static/js/main.bbe75568.js.map"
   },
   "entrypoints": [
     "static/css/main.78294f54.css",
-    "static/js/main.b6a4752c.js"
+    "static/js/main.bbe75568.js"
   ]
 }

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Lighbulb app to use with a bottle of water",
   "private": true,
+    "homepage": "https://autioch.github.io/lightbulb-app",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
