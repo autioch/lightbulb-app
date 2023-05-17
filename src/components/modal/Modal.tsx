@@ -46,11 +46,12 @@ export function Modal({ isOpen, children, title, closeFn }: ModalProps) {
       onClick={onClick}
       onAnimationEnd={onAnimationEnd}
     >
-      <div>
+      {isOpen && <div>
         <header className={styles.ModalHeader}>{title}</header>
         <div className={styles.ModalClose} onClick={closeFn}><CloseIcon/></div>
         {children}
       </div>
+      }
     </dialog>
   );
 }
