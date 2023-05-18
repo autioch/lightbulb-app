@@ -56,8 +56,8 @@ export function App() {
     setColors(newColors);
   }
 
-  function removeColor(index: number) {
-    const newColors = colors.splice(index, 1);
+  function removeColor(removeIndex: number) {
+    const newColors = colors.filter((color, index) => index !== removeIndex);
 
     setColors(newColors);
   }
@@ -78,20 +78,24 @@ export function App() {
       <Modal
         isOpen={isAboutOpen}
         title={aboutTitle}
-        closeFn={() => setIsAboutOpen(false)}
+        onClose={() => setIsAboutOpen(false)}
       >
         <About/>
       </Modal>
       <Modal
         isOpen={isConfigurationOpen}
         title={configurationTitle}
-        closeFn={() => setIsConfigurationOpen(false)}
+        onClose={() => setIsConfigurationOpen(false)}
       >
         <Configuration setSpeed={setSpeed} setColor={setColor} removeColor={removeColor} addColor={addColor}/>
       </Modal>
       <Toolbar>
-        <Toggle label={<AboutIcon/>} onClick={() => setIsAboutOpen(!isAboutOpen)}/>
-        <Toggle label={<ConfigIcon/>} onClick={() => setIsConfigurationOpen(!isConfigurationOpen)}/>
+        <Toggle onClick={() => setIsAboutOpen(!isAboutOpen)}>
+          <AboutIcon/>
+        </Toggle>
+        <Toggle onClick={() => setIsConfigurationOpen(!isConfigurationOpen)}>
+          <ConfigIcon/>
+        </Toggle>
       </Toolbar>
     </ConfigContext.Provider>
   );

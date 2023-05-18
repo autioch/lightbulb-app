@@ -4,8 +4,8 @@ import styles from './Color.module.scss';
 export interface ColorProps {
     index: number
     value: string
-    setColor: (index: number, value: string) => any
-    removeColor: (index: number) => any
+    setColor: (index: number, value: string) => void
+    removeColor: (index: number) => void
 }
 
 export function Color({ index, value, setColor, removeColor }: ColorProps) {

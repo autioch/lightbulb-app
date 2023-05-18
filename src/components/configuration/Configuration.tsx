@@ -6,10 +6,8 @@ import styles from './Configuration.module.scss';
 
 export const configurationTitle = 'Configuration';
 
-export interface ConfigurationProps {
-  setSpeed: (value: number) => any
-  setColor: ColorProps['setColor']
-  removeColor: ColorProps['removeColor'],
+export interface ConfigurationProps extends Pick<ColorProps, 'setColor' | 'removeColor'>{
+  setSpeed: (value: number) => void
   addColor: () => void
 }
 

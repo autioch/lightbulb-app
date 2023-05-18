@@ -1,3 +1,4 @@
+/* eslint-disable no-console, no-eq-null, no-magic-numbers, no-use-before-define, require-unicode-regexp */
 /*
  * This optional code is used to register a service worker.
  * register() is not called by default.

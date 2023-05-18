@@ -5,12 +5,12 @@ import styles from './modal.module.scss';
 
 interface ModalProps {
     isOpen: boolean,
-    children: JSX.Element | JSX.Element[],
+    children: string | JSX.Element | JSX.Element[],
     title: string
-    closeFn: ()=> void
+    onClose: ()=> void
 }
 
-export function Modal({ isOpen, children, title, closeFn }: ModalProps) {
+export function Modal({ isOpen, children, title, onClose: closeFn }: ModalProps) {
   const modalRef = useRef<HTMLDialogElement>(null);
   const classNames = useMemo(() => `${styles.Modal} ${isOpen ? '' : styles.ModalClosing}`, [isOpen]);
 
@@ -26,13 +26,13 @@ export function Modal({ isOpen, children, title, closeFn }: ModalProps) {
     }
   }
 
-  function onClick(ev: SyntheticEvent) {
+  function onClick(ev: SyntheticEvent<HTMLDialogElement | HTMLDivElement>) {
     if (ev.target === modalRef.current) {
       closeFn();
     }
   }
 
-  function onCancel(ev: SyntheticEvent) {
+  function onCancel(ev: SyntheticEvent<HTMLDialogElement>) {
     ev.preventDefault();
     closeFn();
   }
