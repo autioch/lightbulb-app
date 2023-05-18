@@ -7,39 +7,26 @@ import { Configuration, configurationTitle } from './components/configuration/Co
 import { Modal } from './components/modal/Modal';
 import { Toggle } from './components/toggle/Toggle';
 import { Toolbar } from './components/toolbar/Toolbar';
-import { ConfigContext } from './context';
+import { ColorProvider, defaultColors } from './contexts/colors';
+import { CurrentIndexProvider, defaultIndex } from './contexts/currentIndex';
+import { defaultSpeed, SpeedProvider } from './contexts/speed';
 import { ReactComponent as AboutIcon } from './icons/about.svg';
 import { ReactComponent as ConfigIcon } from './icons/config.svg';
 import { getRandomColor } from './utils/color';
-import { restoreConfig, saveConfig } from './utils/persistence';
 
 // eslint-disable-next-line max-lines-per-function
 export function App() {
-  const {
-    color: originalColor = '#afa',
-    colors: originalColors = [],
-    speed: originalSpeed = 2000
-  } = restoreConfig();
-  const [color, switchColor] = useState(originalColor);
-  const [speed, setSpeed] = useState(originalSpeed);
-  const [colors, setColors] = useState(originalColors);
+  const [currentIndex, setIndex] = useState(defaultIndex);
+  const [speed, setSpeed] = useState(defaultSpeed);
+  const [colors, setColors] = useState(defaultColors);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
 
   const changeColor = useCallback(() => {
-    const currentIndex = colors.indexOf(color);
     const newIndex = currentIndex + 1 > colors.length ? 0 : currentIndex + 1;
 
-    switchColor(colors[newIndex]);
-  }, [colors, color]);
-
-  useEffect(() => {
-    saveConfig({
-      speed,
-      color,
-      colors
-    });
-  }, [color, colors, speed]);
+    setIndex(newIndex);
+  }, [colors, currentIndex]);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -69,35 +56,35 @@ export function App() {
   }
 
   return (
-    <ConfigContext.Provider value={{
-      color,
-      speed,
-      colors
-    }}>
-      <Carousel/>
-      <Modal
-        isOpen={isAboutOpen}
-        title={aboutTitle}
-        onClose={() => setIsAboutOpen(false)}
-      >
-        <About/>
-      </Modal>
-      <Modal
-        isOpen={isConfigurationOpen}
-        title={configurationTitle}
-        onClose={() => setIsConfigurationOpen(false)}
-      >
-        <Configuration setSpeed={setSpeed} setColor={setColor} removeColor={removeColor} addColor={addColor}/>
-      </Modal>
-      <Toolbar>
-        <Toggle onClick={() => setIsAboutOpen(!isAboutOpen)}>
-          <AboutIcon/>
-        </Toggle>
-        <Toggle onClick={() => setIsConfigurationOpen(!isConfigurationOpen)}>
-          <ConfigIcon/>
-        </Toggle>
-      </Toolbar>
-    </ConfigContext.Provider>
+    <SpeedProvider speed={speed}>
+      <ColorProvider colors={colors}>
+        <CurrentIndexProvider currentIndex={currentIndex}>
+          <Carousel/>
+          <Modal
+            isOpen={isAboutOpen}
+            title={aboutTitle}
+            onClose={() => setIsAboutOpen(false)}
+          >
+            <About/>
+          </Modal>
+          <Modal
+            isOpen={isConfigurationOpen}
+            title={configurationTitle}
+            onClose={() => setIsConfigurationOpen(false)}
+          >
+            <Configuration setSpeed={setSpeed} setColor={setColor} removeColor={removeColor} addColor={addColor}/>
+          </Modal>
+          <Toolbar>
+            <Toggle onClick={() => setIsAboutOpen(!isAboutOpen)}>
+              <AboutIcon/>
+            </Toggle>
+            <Toggle onClick={() => setIsConfigurationOpen(!isConfigurationOpen)}>
+              <ConfigIcon/>
+            </Toggle>
+          </Toolbar>
+        </CurrentIndexProvider>
+      </ColorProvider>
+    </SpeedProvider>
   );
 }
 

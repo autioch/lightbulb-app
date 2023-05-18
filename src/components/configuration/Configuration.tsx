@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { ConfigContext } from '../../context';
+import { useColors } from '../../contexts/colors';
+import { useSpeed } from '../../contexts/speed';
 import { type ColorProps, Color } from './color/Color';
 import styles from './Configuration.module.scss';
 
@@ -12,8 +13,8 @@ export interface ConfigurationProps extends Pick<ColorProps, 'setColor' | 'remov
 }
 
 export function Configuration({ setSpeed, setColor, removeColor, addColor }: ConfigurationProps) {
-  const config = useContext(ConfigContext);
-  const { speed, colors } = config;
+  const speed = useSpeed();
+  const colors = useColors();
 
   return (
     <div className={styles.Configuration}>
