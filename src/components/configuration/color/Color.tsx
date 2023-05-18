@@ -1,25 +1,42 @@
+import { SyntheticEvent } from 'react';
+
+import { type ColorItem, useColorsDispatch } from '../../../contexts/colors';
 import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
 import styles from './Color.module.scss';
 
 export interface ColorProps {
-    index: number
-    value: string
-    setColor: (index: number, value: string) => void
-    removeColor: (index: number) => void
+    color: ColorItem,
+    canRemove: boolean
 }
 
-export function Color({ index, value, setColor, removeColor }: ColorProps) {
+export function Color({ color, canRemove }: ColorProps) {
+  const colorsDispatch = useColorsDispatch();
+
+  function setColor(ev: SyntheticEvent<HTMLInputElement>) {
+    colorsDispatch({
+      type: 'update',
+      id: color.id,
+      value: (ev.target as HTMLInputElement).value
+    });
+  }
+
+  function removeColor() {
+    colorsDispatch({
+      type: 'remove',
+      id: color.id
+    });
+  }
+
   return (
     <div className={styles.Color}>
-      <div className={styles.ColorIndex}>{index}</div>
+      <div className={styles.ColorIndex}>{color.id}</div>
       <input
         className={styles.ColorInput}
         type="color"
-        key={value}
-        value={value}
-        onChange={(ev) => setColor(index, ev.target.value)}
+        value={color.value}
+        onChange={setColor}
       />
-      <div className={styles.ColorRemove} onClick={() => removeColor(index)}><CloseIcon/></div>
+      { canRemove && <div className={styles.ColorRemove} onClick={removeColor }><CloseIcon/></div> }
     </div>
   );
 }

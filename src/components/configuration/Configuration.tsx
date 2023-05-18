@@ -1,20 +1,28 @@
 import React from 'react';
 
-import { useColors } from '../../contexts/colors';
+import { useColors, useColorsDispatch } from '../../contexts/colors';
 import { useSpeed } from '../../contexts/speed';
-import { type ColorProps, Color } from './color/Color';
+import { Color } from './color/Color';
 import styles from './Configuration.module.scss';
 
 export const configurationTitle = 'Configuration';
 
-export interface ConfigurationProps extends Pick<ColorProps, 'setColor' | 'removeColor'>{
+export interface ConfigurationProps {
   setSpeed: (value: number) => void
-  addColor: () => void
 }
 
-export function Configuration({ setSpeed, setColor, removeColor, addColor }: ConfigurationProps) {
+export function Configuration({ setSpeed }: ConfigurationProps) {
   const speed = useSpeed();
   const colors = useColors();
+  const colorsDispatch = useColorsDispatch();
+
+  function addColor() {
+    colorsDispatch({
+      type: 'add'
+    });
+  }
+
+  const canRemove = colors.length > 1;
 
   return (
     <div className={styles.Configuration}>
@@ -29,14 +37,8 @@ export function Configuration({ setSpeed, setColor, removeColor, addColor }: Con
       />
       <p className={styles.ConfigurationWarning}>Warning! Setting value below 250 is not safe for epilepsy!</p>
       <h4>Color list</h4>
-      <div>
-        {colors.map((color, index) => <Color
-          key={index}
-          index={index}
-          value={color}
-          setColor={setColor}
-          removeColor={removeColor}
-        />)}
+      <div className={styles.ConfigurationList}>
+        {colors.map((color) => <Color key={color.id} color={color} canRemove={canRemove}/>)}
       </div>
       <div className={styles.ColorAdd} onClick={addColor}>+ Add Color</div>
     </div>

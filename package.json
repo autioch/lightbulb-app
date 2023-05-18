@@ -48,6 +48,7 @@
       "linebreak-style": ["off"],
       "no-unused-vars": ["off"],
       "no-extra-parens": ["off"],
+      "no-plusplus": ["off"],
       "no-shadow": ["off"]
     }
   },

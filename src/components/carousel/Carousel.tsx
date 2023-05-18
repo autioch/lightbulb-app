@@ -13,7 +13,7 @@ export function Carousel() {
   return (<div
     className={styles.Carousel}
     style={{
-      backgroundColor: colors[index],
+      backgroundColor: colors[index].value,
       transition: `background-color ${speed}ms linear`
     }}
   />);
