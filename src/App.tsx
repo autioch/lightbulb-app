@@ -10,13 +10,13 @@ import { Toolbar } from './components/toolbar/Toolbar';
 import { useColors } from './contexts/colors';
 import { CurrentIndexProvider, defaultIndex } from './contexts/currentIndex';
 import { defaultSpeed, SpeedProvider } from './contexts/speed';
+import { useLocalStorage } from './hooks/useLocalStorage';
 import { ReactComponent as AboutIcon } from './icons/about.svg';
 import { ReactComponent as ConfigIcon } from './icons/config.svg';
 
-// eslint-disable-next-line max-lines-per-function
 export function App() {
   const [currentIndex, setIndex] = useState(defaultIndex);
-  const [speed, setSpeed] = useState(defaultSpeed);
+  const [speed, setSpeed] = useLocalStorage<number>('speed', defaultSpeed);
   const colors = useColors();
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);

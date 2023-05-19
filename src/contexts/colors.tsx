@@ -1,5 +1,6 @@
-import { createContext, Dispatch, PropsWithChildren, useContext, useReducer } from 'react';
+import { createContext, Dispatch, PropsWithChildren, useCallback, useContext, useReducer } from 'react';
 
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getRandomColor } from '../utils/color';
 
 export type ColorItem = {
@@ -65,7 +66,17 @@ const ColorsContext = createContext(initialState);
 const ColorsDispatchContext = createContext(null as unknown as Dispatch<Action>);
 
 export function ColorsProvider({ children }: PropsWithChildren) {
-  const [colors, dispatch] = useReducer(colorsReducer, initialState);
+  const [savedColors, saveColors] = useLocalStorage('colors', initialState);
+
+  const withSave = useCallback((colors: State, action: Action) => {
+    const newState = colorsReducer(colors, action);
+
+    saveColors(newState);
+
+    return newState;
+  }, [saveColors]);
+
+  const [colors, dispatch] = useReducer(withSave, savedColors);
 
   return (
     <ColorsContext.Provider value={colors}>
