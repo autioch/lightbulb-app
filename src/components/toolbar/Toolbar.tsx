@@ -1,12 +1,8 @@
-import { ReactElement } from 'react';
+import { PropsWithChildren } from 'react';
 
 import styles from './toolbar.module.scss';
 
-interface ToolbarProps {
-    children: ReactElement[]
-}
-
-export function Toolbar({ children }: ToolbarProps) {
+export function Toolbar({ children }: PropsWithChildren) {
   return (
     <div className={styles.Toolbar}>
       {children}
