@@ -10,7 +10,7 @@ export interface ColorProps {
 }
 
 export function Color({ color, canRemove }: ColorProps) {
-  const colorsDispatch = useColorsDispatch();
+  const colorsDispatch = useColorsDispatch()!;
 
   function setColor(ev: SyntheticEvent<HTMLInputElement>) {
     colorsDispatch({

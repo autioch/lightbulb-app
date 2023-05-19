@@ -14,11 +14,17 @@ export interface ConfigurationProps {
 export function Configuration({ setSpeed }: ConfigurationProps) {
   const speed = useSpeed();
   const colors = useColors();
-  const colorsDispatch = useColorsDispatch();
+  const colorsDispatch = useColorsDispatch()!;
 
   function addColor() {
     colorsDispatch({
       type: 'add'
+    });
+  }
+
+  function resetColors() {
+    colorsDispatch({
+      type: 'reset'
     });
   }
 
@@ -41,6 +47,8 @@ export function Configuration({ setSpeed }: ConfigurationProps) {
         {colors.map((color) => <Color key={color.id} color={color} canRemove={canRemove}/>)}
       </div>
       <div className={styles.ColorAdd} onClick={addColor}>+ Add Color</div>
+      <div/>
+      <div className={styles.ColorAdd} onClick={resetColors}>Reset colors</div>
     </div>
   );
 }

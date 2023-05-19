@@ -9,7 +9,10 @@ export type ColorItem = {
 }
 
 type State = ColorItem[];
-type Action = { type: 'add'} | { type: 'remove', id: number} | {type: 'update', id: number, value: string}
+type Action = { type: 'add'} |
+  { type: 'remove', id: number} |
+  {type: 'update', id: number, value: string} |
+  { type: 'reset'}
 
 const initialState: ColorItem[] = ([
   '#00FFFF',
@@ -57,13 +60,15 @@ function colorsReducer(colors: State, action: Action) {
 
         return color;
       });
+    case 'reset':
+      return structuredClone(initialState);
     default:
       return colors;
   }
 }
 
 const ColorsContext = createContext(initialState);
-const ColorsDispatchContext = createContext(null as unknown as Dispatch<Action>);
+const ColorsDispatchContext = createContext<Dispatch<Action> | null>(null);
 
 export function ColorsProvider({ children }: PropsWithChildren) {
   const [savedColors, saveColors] = useLocalStorage('colors', initialState);
