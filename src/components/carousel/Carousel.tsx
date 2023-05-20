@@ -29,5 +29,6 @@ export function Carousel({ isPaused }: { isPaused:boolean}) {
       backgroundColor: colors[index].value,
       transition: `background-color ${speed}ms linear`
     }}
-  />);
+  >
+  </div>);
 }

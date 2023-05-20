@@ -9,6 +9,7 @@ import { Toggle } from './components/toggle/Toggle';
 import { Toolbar } from './components/toolbar/Toolbar';
 import { defaultSpeed, SpeedProvider } from './contexts/speed';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { useScreenLock } from './hooks/useScreenLock';
 import { ReactComponent as AboutIcon } from './icons/about.svg';
 import { ReactComponent as ConfigIcon } from './icons/config.svg';
 
@@ -16,6 +17,8 @@ export function App() {
   const [speed, setSpeed] = useLocalStorage<number>('speed', defaultSpeed);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
+
+  useScreenLock();
 
   return (
     <SpeedProvider speed={speed}>
