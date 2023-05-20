@@ -1,4 +1,7 @@
 .Configuration {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .ConfigurationWarning{
@@ -10,4 +13,9 @@
     margin-left: 3rem;
     cursor: pointer;
     margin-top: .5rem;
+}
+
+.ConfigurationList {
+    overflow: auto;
+    min-height: 1px;
 }

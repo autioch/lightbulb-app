@@ -7,39 +7,23 @@ import { Configuration, configurationTitle } from './components/configuration/Co
 import { Modal } from './components/modal/Modal';
 import { Toggle } from './components/toggle/Toggle';
 import { Toolbar } from './components/toolbar/Toolbar';
-import { ConfigContext } from './context';
+import { useColors } from './contexts/colors';
+import { CurrentIndexProvider, defaultIndex } from './contexts/currentIndex';
+import { defaultSpeed, SpeedProvider } from './contexts/speed';
+import { useLocalStorage } from './hooks/useLocalStorage';
 import { ReactComponent as AboutIcon } from './icons/about.svg';
 import { ReactComponent as ConfigIcon } from './icons/config.svg';
-import { getRandomColor } from './utils/color';
-import { restoreConfig, saveConfig } from './utils/persistence';
 
-// eslint-disable-next-line max-lines-per-function
 export function App() {
-  const {
-    color: originalColor = '#afa',
-    colors: originalColors = [],
-    speed: originalSpeed = 2000
-  } = restoreConfig();
-  const [color, switchColor] = useState(originalColor);
-  const [speed, setSpeed] = useState(originalSpeed);
-  const [colors, setColors] = useState(originalColors);
+  const [currentIndex, setIndex] = useState(defaultIndex);
+  const [speed, setSpeed] = useLocalStorage<number>('speed', defaultSpeed);
+  const colors = useColors();
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
 
   const changeColor = useCallback(() => {
-    const currentIndex = colors.indexOf(color);
-    const newIndex = currentIndex + 1 > colors.length ? 0 : currentIndex + 1;
-
-    switchColor(colors[newIndex]);
-  }, [colors, color]);
-
-  useEffect(() => {
-    saveConfig({
-      speed,
-      color,
-      colors
-    });
-  }, [color, colors, speed]);
+    setIndex((currentIndex + 1) % colors.length);
+  }, [colors, currentIndex]);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -50,50 +34,26 @@ export function App() {
     }
   }, [isAboutOpen, isConfigurationOpen, speed, changeColor]);
 
-  function setColor(changeIndex: number, newColor: string) {
-    const newColors = colors.map((oldColor, index) => index === changeIndex ? newColor : oldColor); // eslint-disable-line no-confusing-arrow, max-len
-
-    setColors(newColors);
-  }
-
-  function removeColor(index: number) {
-    const newColors = colors.splice(index, 1);
-
-    setColors(newColors);
-  }
-
-  function addColor() {
-    const newColors = [...colors, getRandomColor()];
-
-    setColors(newColors);
-  }
-
   return (
-    <ConfigContext.Provider value={{
-      color,
-      speed,
-      colors
-    }}>
-      <Carousel/>
-      <Modal
-        isOpen={isAboutOpen}
-        title={aboutTitle}
-        closeFn={() => setIsAboutOpen(false)}
-      >
-        <About/>
-      </Modal>
-      <Modal
-        isOpen={isConfigurationOpen}
-        title={configurationTitle}
-        closeFn={() => setIsConfigurationOpen(false)}
-      >
-        <Configuration setSpeed={setSpeed} setColor={setColor} removeColor={removeColor} addColor={addColor}/>
-      </Modal>
-      <Toolbar>
-        <Toggle label={<AboutIcon/>} onClick={() => setIsAboutOpen(!isAboutOpen)}/>
-        <Toggle label={<ConfigIcon/>} onClick={() => setIsConfigurationOpen(!isConfigurationOpen)}/>
-      </Toolbar>
-    </ConfigContext.Provider>
+    <SpeedProvider speed={speed}>
+      <CurrentIndexProvider currentIndex={currentIndex}>
+        <Carousel/>
+        <Modal isOpen={isAboutOpen} title={aboutTitle} onClose={() => setIsAboutOpen(false)} >
+          <About/>
+        </Modal>
+        <Modal isOpen={isConfigurationOpen} title={configurationTitle} onClose={() => setIsConfigurationOpen(false)} >
+          <Configuration setSpeed={setSpeed}/>
+        </Modal>
+        <Toolbar>
+          <Toggle onClick={() => setIsAboutOpen(!isAboutOpen)}>
+            <AboutIcon/>
+          </Toggle>
+          <Toggle onClick={() => setIsConfigurationOpen(!isConfigurationOpen)}>
+            <ConfigIcon/>
+          </Toggle>
+        </Toolbar>
+      </CurrentIndexProvider>
+    </SpeedProvider>
   );
 }
 

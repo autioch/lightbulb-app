@@ -1,15 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { ConfigContext } from '../../context';
+import { useColors } from '../../contexts/colors';
+import { useCurrentIndex } from '../../contexts/currentIndex';
+import { useSpeed } from '../../contexts/speed';
 import styles from './carousel.module.scss';
 
 export function Carousel() {
-  const { speed, color } = useContext(ConfigContext);
+  const colors = useColors();
+  const index = useCurrentIndex();
+  const speed = useSpeed();
 
   return (<div
     className={styles.Carousel}
     style={{
-      backgroundColor: color,
+      backgroundColor: colors[index].value,
       transition: `background-color ${speed}ms linear`
     }}
   />);

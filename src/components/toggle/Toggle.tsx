@@ -1,12 +1,14 @@
+import { type ReactElement } from 'react';
+
 import styles from './toggle.module.scss';
 
 interface ToggleProps {
   onClick: () => void
-  label: string | any
+  children: ReactElement
 }
 
-export function Toggle({ onClick, label }: ToggleProps) {
+export function Toggle({ onClick, children }: ToggleProps) {
   return (
-    <div className={styles.Toggle} onClick={onClick}>{label}</div>
+    <div className={styles.Toggle} onClick={onClick}>{children}</div>
   );
 }

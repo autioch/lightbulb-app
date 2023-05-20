@@ -1,21 +1,34 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { ConfigContext } from '../../context';
-import { type ColorProps, Color } from './color/Color';
+import { useColors, useColorsDispatch } from '../../contexts/colors';
+import { useSpeed } from '../../contexts/speed';
+import { Color } from './color/Color';
 import styles from './Configuration.module.scss';
 
 export const configurationTitle = 'Configuration';
 
 export interface ConfigurationProps {
-  setSpeed: (value: number) => any
-  setColor: ColorProps['setColor']
-  removeColor: ColorProps['removeColor'],
-  addColor: () => void
+  setSpeed: (value: number) => void
 }
 
-export function Configuration({ setSpeed, setColor, removeColor, addColor }: ConfigurationProps) {
-  const config = useContext(ConfigContext);
-  const { speed, colors } = config;
+export function Configuration({ setSpeed }: ConfigurationProps) {
+  const speed = useSpeed();
+  const colors = useColors();
+  const colorsDispatch = useColorsDispatch()!;
+
+  function addColor() {
+    colorsDispatch({
+      type: 'add'
+    });
+  }
+
+  function resetColors() {
+    colorsDispatch({
+      type: 'reset'
+    });
+  }
+
+  const canRemove = colors.length > 1;
 
   return (
     <div className={styles.Configuration}>
@@ -30,16 +43,12 @@ export function Configuration({ setSpeed, setColor, removeColor, addColor }: Con
       />
       <p className={styles.ConfigurationWarning}>Warning! Setting value below 250 is not safe for epilepsy!</p>
       <h4>Color list</h4>
-      <div>
-        {colors.map((color, index) => <Color
-          key={index}
-          index={index}
-          value={color}
-          setColor={setColor}
-          removeColor={removeColor}
-        />)}
+      <div className={styles.ConfigurationList}>
+        {colors.map((color) => <Color key={color.id} color={color} canRemove={canRemove}/>)}
       </div>
       <div className={styles.ColorAdd} onClick={addColor}>+ Add Color</div>
+      <div/>
+      <div className={styles.ColorAdd} onClick={resetColors}>Reset colors</div>
     </div>
   );
 }

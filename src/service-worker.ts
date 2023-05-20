@@ -1,3 +1,4 @@
+/* eslint-disable no-undef, no-underscore-dangle, require-unicode-regexp, prefer-regex-literals, function-paren-newline, max-len */
 // / <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
 
